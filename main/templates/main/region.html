@@ -1,0 +1,29 @@
+{% extends 'main/main.html' %}
+
+{% block title %}
+{{ name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ name }}</h1>
+
+
+    <table border="1">
+       <tr>
+        <th>Имя</th>
+       </tr>
+        {% for el in Raw %}
+        <tr>
+        <th>{{el.name}}</th>
+        </tr>
+        {% endfor %}
+     </table>
+    <h2>__________________________</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }} <br>
+        <button type="submit">Добавить новый регион </button>
+    </form>
+    {{ ern }}
+
+{% endblock %}

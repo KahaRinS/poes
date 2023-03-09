@@ -1,0 +1,36 @@
+{% extends 'main/main.html' %}
+
+{% block title %}
+{{ name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ name }}</h1>
+
+
+    <table border="1">
+       <tr>
+        <th>Датчик</th>
+        <th>Температура</th>
+        <th>Дата</th>
+        <th>Время</th>
+       </tr>
+        {% for el in Raw %}
+        <tr>
+        <th>{{el.sensor}}</th>
+        <th>{{el.temp}}</th>
+        <th>{{el.date}}</th>
+        <th>{{el.time}}</th>
+        </tr>
+        {% endfor %}
+     </table>
+    <h2>__________________________</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }} <br>
+        <button type="submit">Добавить новый результат </button>
+    </form>
+    {{ ern }}
+
+{% endblock %}
+lllljljl

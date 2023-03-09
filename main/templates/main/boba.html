@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Главная</title>
+
+</head>
+<body>
+    <canvas id="chart", style="width: 100px; display: block; height: 33px;"></canvas>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <script>
+        window.onload = function () {
+          var data = [
+            {% for el in Raw %}
+             {{el.temp}},
+            {% endfor %}
+          ];
+          var labels = [
+            {% for el in Raw %}
+             '{{el.date}}',
+            {% endfor %}
+          ];
+
+          var config = {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'A random dataset',
+                  backgroundColor: 'black',
+                  borderColor: 'lightblue',
+                  data: data,
+                  fill: false
+                }
+              ]
+            },
+            options: {
+              responsive: true
+            }
+          };
+
+          var ctx = document.getElementById('chart').getContext('2d');
+          window.myLine = new Chart(ctx, config);
+        };
+        </script>
+{% if first %}
+    <table border="1">
+       <tr>
+        <th>Датчик</th>
+        <th>Температура</th>
+        <th>Дата</th>
+        <th>Время</th>
+       </tr>
+        {% for el in first %}
+        <tr>
+        <th>{{el.sensor}}</th>
+        <th>{{el.temp}}</th>
+        <th>{{el.date}}</th>
+        <th>{{el.time}}</th>
+        </tr>
+        {% endfor %}
+     </table>
+    {% endif %}
+{% if sens %}
+    <table border="1">
+       <tr>
+        <th>Имя</th>
+        <th>Регион</th>
+        <th>Широта</th>
+        <th>Долгота</th>
+       </tr>
+        {% for el in sens %}
+        <tr>
+        <th>{{el.senname}}</th>
+        <th>{{el.region}}</th>
+        <th>{{el.dolgitude}}</th>
+        <th>{{el.longitude}}</th>
+        </tr>
+        {% endfor %}
+     </table>
+    {% endif %}
+    <div style="border: 3px solid red; width: 50%; ">
+        <h3>Все температуры по дате</h3><br>
+        <form method="post">
+         {% csrf_token %}
+          <input type="date" name="date" value="increment" required/> <br>
+          <input type="submit" name="1" value="Получить" />
+        </form>
+    </div>
+
+    {% if max %}
+     {{ max }}
+    {{ min }}
+    {% endif %}
+
+
+    <div style="border: 3px solid red; width: 50%;">
+        <h3>Минимальная и максимальная температуры из временного интервала</h3>
+        <form method="post">
+         {% csrf_token %}
+          <input type="date" name="datemin" value="increment" required/> <br>
+          <input type="date" name="datemax" value="increment" required/> <br>
+          <input type="submit" name="2" value="Получить" />
+        </form>
+    </div>
+
+
+    <div style="border: 3px solid red; width: 50%;">
+        <h3>Все датчики региона</h3>
+        <form method="post">
+         {% csrf_token %}
+          {{ form.region }} <br>
+          <input type="submit" name="3" value="Получить" />
+        </form>
+    </div>
+
+
+    <div style="border: 3px solid red; width: 50%; ">
+
+    </div>
+</body>
+</html>
