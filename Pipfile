@@ -11,6 +11,7 @@ django-cors-headers = "*"
 django-environ = "*"
 jwt = "*"
 pyjwt = "*"
+django-filter = "*"
 
 [dev-packages]
 
